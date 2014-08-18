@@ -1,4 +1,4 @@
-## Reproducible Research
+# Reproducible Research
 setwd("L:/R/Reproducible Research")
 
 ## read data
@@ -16,7 +16,6 @@ for (i in 1:length(date))
     Mean[i] <- mean(data1$steps[which(data1$date == date[i])])
 }
 
-# barplot(height = stepsum,space = 0.5, ylab = "sum", cex.names = date)
 
 month <- as.POSIXlt(date)$mon + 1
 day <- as.POSIXlt(date)$mday
@@ -31,14 +30,14 @@ for (i in 1:length(date))
 {
     Median[i] <- median(data2$steps[which(data2$date == date[i])])
 }
-## 0
+
 #Mean[which(Mean == "NaN")] <- 0
 #Median[is.na(Median)] <- 0
 
 result <- data.frame(mean = Mean, median = Median, Date = date)
-# summary(result)
 
-#data3<-data1[which(data1$date=="2012-10-03"|data1$date=="2012-10-04"),]
+
+
 with(data2, plot(interval, steps/480, col = date))
 
 for (i in 1:61)
@@ -52,12 +51,12 @@ data2[which(data2$step == max(data2$step)),]
 
 
 
-####Imputing missing values
+##Imputing missing values
 number <- dim(data)[1] - sum(complete.cases(data))
 
 Mean[which(Mean == "NaN")] <- 0
 Mean[which(Mean == 0)] <- (Mean[which(Mean == 0)] + Mean[(which(Mean == 0) + 31)%%62])/2
-# [1]  1  8 32 35 40 41 45 61
+
 
 for (i in c(1,8,32,35,40,41,45,61))
 {
