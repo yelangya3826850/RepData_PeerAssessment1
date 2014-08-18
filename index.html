@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Repdata PeerAssessment1 by yelangya3826850</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/yelangya3826850/RepData_PeerAssessment1">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/yelangya3826850/RepData_PeerAssessment1/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/yelangya3826850/RepData_PeerAssessment1/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Repdata PeerAssessment1</h1>
+          <p>Peer Assessment 1 for Reproducible Research</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/yelangya3826850">yelangya3826850</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <ul>
+<li>author: "MengNan"</li>
+<li>date: "Monday, August 18, 2014"</li>
+</ul><p>This assignment is for class Reproducible Research(Peer Assessment 1) Coursera provided by JOHNS HOPKINS. This paper contains the process of the analysis of the data.</p>
+
+<h1>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p>It is now possible to collect a large amount of data about personal movement using activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. These type of devices are part of the âquantified selfâ movement â a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. But these data remain under-utilized both because the raw data are hard to obtain and there is a lack of statistical methods and software for processing and interpreting the data.</p>
+
+<p>This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.</p>
+
+<h1>
+<a name="analysis" class="anchor" href="#analysis"><span class="octicon octicon-link"></span></a>Analysis</h1>
+
+<ul>
+<li>Load and preprocess the data</li>
+</ul><div class="highlight highlight-r"><pre><span class="kp">setwd</span><span class="p">(</span><span class="s">"L:/R/Reproducible Research"</span><span class="p">)</span>
+data <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">"./RepData_PeerAssessment1/activity/activity.csv"</span><span class="p">,</span> header <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> sep <span class="o">=</span> <span class="s">","</span><span class="p">)</span>
+index <span class="o">&lt;-</span> complete.cases<span class="p">(</span>data<span class="p">)</span>
+data1 <span class="o">&lt;-</span> data<span class="p">[</span>index<span class="p">,]</span>
+</pre></div>
+
+<p>The row data is like :</p>
+
+<div class="highlight highlight-r"><pre><span class="kp">head</span><span class="p">(</span>data<span class="p">)</span>
+</pre></div>
+
+<p>The processed data :</p>
+
+<div class="highlight highlight-r"><pre><span class="kp">head</span><span class="p">(</span>data1<span class="p">)</span>
+</pre></div>
+
+<ul>
+<li>Calculate mean total number of steps taken per day</li>
+</ul><pre lang="r,"><code>
+data2 &lt;- data1[-which(data1$steps==0),]
+date &lt;- unique(data$date)
+stepsum &lt;- as.numeric()
+Mean &lt;- as.numeric()
+Median &lt;- as.numeric()
+for (i in 1:length(date))
+{
+    stepsum[i] &lt;- sum(data1$steps[which(data1$date == date[i])])
+    Mean[i] &lt;- mean(data1$steps[which(data1$date == date[i])])
+}
+</code></pre>
+
+<ol>
+<li>Draw a figure of histogram of the total number of steps taken each day:</li>
+</ol><div class="highlight highlight-r"><pre>stepsum <span class="o">&lt;-</span> <span class="kp">as.numeric</span><span class="p">()</span>
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="kp">length</span><span class="p">(</span><span class="kp">date</span><span class="p">))</span>
+<span class="p">{</span>
+    stepsum<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span> <span class="kp">sum</span><span class="p">(</span>data1<span class="o">$</span>steps<span class="p">[</span><span class="kp">which</span><span class="p">(</span>data1<span class="o">$</span>date <span class="o">==</span> <span class="kp">date</span><span class="p">[</span>i<span class="p">])])</span>
+<span class="p">}</span>
+month <span class="o">&lt;-</span> <span class="kp">as.POSIXlt</span><span class="p">(</span><span class="kp">date</span><span class="p">)</span><span class="o">$</span>mon <span class="o">+</span> <span class="m">1</span>
+day <span class="o">&lt;-</span> <span class="kp">as.POSIXlt</span><span class="p">(</span><span class="kp">date</span><span class="p">)</span><span class="o">$</span>mday
+stepsum <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>stepsum<span class="p">,</span><span class="kp">date</span><span class="p">,</span>month<span class="p">,</span>day<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>plyr<span class="p">)</span>
+
+</pre></div>
+
+<p>So you can see the figure here as follows:</p>
+
+<div class="highlight highlight-r"><pre>mm <span class="o">&lt;-</span> ddply<span class="p">(</span>stepsum<span class="p">,</span> <span class="s">"date"</span><span class="p">,</span>summarise<span class="p">,</span> stepsum <span class="o">=</span> <span class="kp">sum</span><span class="p">(</span>stepsum<span class="p">))</span>
+ggplot<span class="p">(</span>data<span class="o">=</span>mm<span class="p">,</span>aes<span class="p">(</span>x <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>day<span class="p">),</span>fill <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>month<span class="p">),</span> y <span class="o">=</span> stepsum<span class="p">))</span> <span class="o">+</span> geom_bar<span class="p">(</span>stat <span class="o">=</span> <span class="s">"identity"</span><span class="p">,</span>alpha<span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
+</pre></div>
+
+<p>Now, the figure above is the statictis of total number of the steps every day. Color "Red" represent Month Oct.and "blue" stands for Nov. In this cumulative distribution figure, we can clearly the difference between two months and the distribution of the same month.</p>
+
+<ol>
+<li>Calculate and report the mean and median total number of steps taken per day</li>
+</ol><div class="highlight highlight-r"><pre>Mean <span class="o">&lt;-</span> <span class="kp">as.numeric</span><span class="p">()</span>
+Median <span class="o">&lt;-</span> <span class="kp">as.numeric</span><span class="p">()</span>
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="kp">length</span><span class="p">(</span><span class="kp">date</span><span class="p">))</span>
+<span class="p">{</span>
+    Mean<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p">(</span>data1<span class="o">$</span>steps<span class="p">[</span><span class="kp">which</span><span class="p">(</span>data1<span class="o">$</span>date <span class="o">==</span> <span class="kp">date</span><span class="p">[</span>i<span class="p">])])</span>
+<span class="p">}</span>
+data2 <span class="o">&lt;-</span> data1<span class="p">[</span><span class="o">-</span><span class="kp">which</span><span class="p">(</span>data1<span class="o">$</span>steps<span class="o">==</span><span class="m">0</span><span class="p">),]</span>
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="kp">length</span><span class="p">(</span><span class="kp">date</span><span class="p">))</span>
+<span class="p">{</span>
+    Median<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span> median<span class="p">(</span>data2<span class="o">$</span>steps<span class="p">[</span><span class="kp">which</span><span class="p">(</span>data2<span class="o">$</span>date <span class="o">==</span> <span class="kp">date</span><span class="p">[</span>i<span class="p">])])</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Some part of the result is as follows:</p>
+
+<pre lang="r,"><code>result &lt;- data.frame(mean = Mean, median = Median, Date = date)
+head(result)
+</code></pre>
+
+<ul>
+<li>Find average daily activity pattern</li>
+</ul><p>In order to distinguish the different days and get an obvious comparation, I plot the data within the same picture and use different colors:</p>
+
+<div class="highlight highlight-r"><pre><span class="kp">with</span><span class="p">(</span>data2<span class="p">,</span> plot<span class="p">(</span>interval<span class="p">,</span> steps<span class="o">/</span><span class="m">480</span><span class="p">,</span> col <span class="o">=</span> <span class="kp">date</span><span class="p">,</span> xlab <span class="o">=</span> <span class="s">"interval"</span><span class="p">,</span> ylab <span class="o">=</span> <span class="s">"average of steps per day"</span><span class="p">))</span>
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="m">61</span><span class="p">)</span>
+<span class="p">{</span>
+    data4 <span class="o">&lt;-</span> data2<span class="p">[</span><span class="kp">which</span><span class="p">(</span>data2<span class="o">$</span>date<span class="o">==</span><span class="kp">date</span><span class="p">[</span>i<span class="p">]),]</span>
+    <span class="kp">with</span><span class="p">(</span>data4<span class="p">,</span> lines<span class="p">(</span>interval<span class="p">,</span>steps<span class="o">/</span><span class="m">480</span> <span class="p">,</span> col <span class="o">=</span> i<span class="p">))</span>
+<span class="p">}</span>
+
+
+</pre></div>
+
+<p>Actually, it is a bit of mess in the figure, but that does not affect the highest pionts. We can clearly see them...</p>
+
+<p>And the 5-minute interval that on average across all the days in the dataset, contains the maximum number of steps is the 615th interval on 2012-11-27:</p>
+
+<div class="highlight highlight-r"><pre>data2<span class="p">[</span><span class="kp">which</span><span class="p">(</span>data2<span class="o">$</span>step <span class="o">==</span> <span class="kp">max</span><span class="p">(</span>data2<span class="o">$</span>step<span class="p">)),]</span>
+</pre></div>
+
+<ul>
+<li>Imputing missing values</li>
+</ul><div class="highlight highlight-r"><pre>number <span class="o">&lt;-</span> <span class="kp">dim</span><span class="p">(</span>data<span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">-</span> <span class="kp">sum</span><span class="p">(</span>complete.cases<span class="p">(</span>data<span class="p">))</span>
+
+Mean<span class="p">[</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="s">"NaN"</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+Mean<span class="p">[</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="m">0</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="p">(</span>Mean<span class="p">[</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="m">0</span><span class="p">)]</span> <span class="o">+</span> Mean<span class="p">[(</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="o">+</span> <span class="m">31</span><span class="p">)</span><span class="o">%%</span><span class="m">62</span><span class="p">])</span><span class="o">/</span><span class="m">2</span>
+<span class="c1"># [1]  1  8 32 35 40 41 45 61</span>
+
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">32</span><span class="p">,</span><span class="m">35</span><span class="p">,</span><span class="m">40</span><span class="p">,</span><span class="m">41</span><span class="p">,</span><span class="m">45</span><span class="p">,</span><span class="m">61</span><span class="p">))</span>
+<span class="p">{</span>
+    data<span class="o">$</span>steps<span class="p">[</span><span class="kp">which</span><span class="p">(</span>data<span class="o">$</span>date <span class="o">==</span> <span class="kp">date</span><span class="p">[</span>i<span class="p">])]</span> <span class="o">&lt;-</span> Mean<span class="p">[</span>i<span class="p">]</span>
+<span class="p">}</span>
+
+stepsum2 <span class="o">&lt;-</span> <span class="kp">as.numeric</span><span class="p">()</span>
+
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="kp">length</span><span class="p">(</span><span class="kp">date</span><span class="p">))</span>
+<span class="p">{</span>
+  stepsum2<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span> <span class="kp">sum</span><span class="p">(</span>data<span class="o">$</span>steps<span class="p">[</span><span class="kp">which</span><span class="p">(</span>data<span class="o">$</span>date <span class="o">==</span> <span class="kp">date</span><span class="p">[</span>i<span class="p">])])</span>
+<span class="p">}</span>
+
+
+month <span class="o">&lt;-</span> <span class="kp">as.POSIXlt</span><span class="p">(</span><span class="kp">date</span><span class="p">)</span><span class="o">$</span>mon <span class="o">+</span> <span class="m">1</span>
+day <span class="o">&lt;-</span> <span class="kp">as.POSIXlt</span><span class="p">(</span><span class="kp">date</span><span class="p">)</span><span class="o">$</span>mday
+stepsum2 <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>stepsum2<span class="p">,</span><span class="kp">date</span><span class="p">,</span>month<span class="p">,</span>day<span class="p">)</span>
+mm <span class="o">&lt;-</span> ddply<span class="p">(</span>stepsum2<span class="p">,</span> <span class="s">"date"</span><span class="p">,</span> summarise<span class="p">,</span> stepsum <span class="o">=</span> <span class="kp">sum</span><span class="p">(</span>stepsum2<span class="p">))</span>
+<span class="sb">``</span>`<span class="p">{</span>r<span class="p">}</span>
+mm<span class="p">[</span><span class="m">8</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> mm<span class="p">[</span><span class="m">8</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="m">8000</span>
+mm<span class="p">[</span><span class="m">25</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> mm<span class="p">[</span><span class="m">25</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="m">6000</span>
+mm<span class="p">[</span><span class="m">46</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> mm<span class="p">[</span><span class="m">46</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="m">7000</span>
+</pre></div>
+
+<div class="highlight highlight-r"><pre>ggplot<span class="p">(</span>data<span class="o">=</span>mm<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>day<span class="p">),</span>fill <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>month<span class="p">),</span> y <span class="o">=</span> stepsum<span class="p">))</span> <span class="o">+</span> geom_bar<span class="p">(</span>stat <span class="o">=</span> <span class="s">"identity"</span><span class="p">,</span>alpha<span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
+
+</pre></div>
+
+<p>I use the average data of the same day to substitute the missing value. And from the plot you can see a obvious difference from the first part of the assignment. Imputing missing data on the estimates of the total daily number of steps makes the distribution more smooth.</p>
+
+<ul>
+<li>Find differences in activity patterns between weekdays and weekends</li>
+</ul><div class="highlight highlight-r"><pre>workday <span class="o">&lt;-</span> <span class="kp">as.character</span><span class="p">()</span>
+day <span class="o">&lt;-</span> <span class="kp">weekdays</span><span class="p">(</span><span class="kp">as.Date</span><span class="p">(</span>data<span class="o">$</span><span class="kp">date</span><span class="p">))</span>
+workday<span class="p">[</span><span class="kp">which</span><span class="p">(</span>day <span class="o">==</span> <span class="s">"Sunday"</span> <span class="o">|</span> day <span class="o">==</span> <span class="s">"Saturday"</span><span class="p">)]</span>  <span class="o">&lt;-</span> <span class="s">"weekend"</span>
+workday<span class="p">[</span><span class="kp">which</span><span class="p">(</span>day <span class="o">==</span> <span class="s">"Monday"</span> <span class="o">|</span> day <span class="o">==</span> <span class="s">"Tuesday"</span> <span class="o">|</span> day <span class="o">==</span> <span class="s">"Wednesday"</span><span class="o">|</span> day <span class="o">==</span> <span class="s">"Thursday"</span> <span class="o">|</span> day <span class="o">==</span> <span class="s">"Friday"</span><span class="p">)]</span>  <span class="o">&lt;-</span> <span class="s">"weekday"</span>
+Data <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>data<span class="p">,</span>workday<span class="p">)</span>
+
+
+mmm <span class="o">&lt;-</span> ddply<span class="p">(</span>Data<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">"interval"</span><span class="p">,</span><span class="s">"workday"</span><span class="p">),</span>summarise<span class="p">,</span> steps <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>steps<span class="p">))</span>
+nnn <span class="o">&lt;-</span> mmm<span class="p">[</span><span class="kp">which</span><span class="p">(</span>mmm<span class="o">$</span>workday <span class="o">==</span> <span class="s">"weekday"</span><span class="p">),]</span>
+nn <span class="o">&lt;-</span> mmm<span class="p">[</span><span class="kp">which</span><span class="p">(</span>mmm<span class="o">$</span>workday <span class="o">==</span> <span class="s">"weekend"</span><span class="p">),]</span>
+Data2 <span class="o">&lt;-</span> <span class="kp">t</span><span class="p">(</span><span class="kt">data.frame</span><span class="p">(</span><span class="kp">t</span><span class="p">(</span>nnn<span class="p">),</span><span class="kp">t</span><span class="p">(</span>nn<span class="p">)))</span>
+Data2 <span class="o">&lt;-</span> <span class="kp">as.data.frame</span><span class="p">(</span>Data2<span class="p">)</span>
+Data2<span class="o">$</span>steps <span class="o">&lt;-</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.character</span><span class="p">(</span>Data2<span class="o">$</span>steps<span class="p">))</span>
+Data2<span class="o">$</span>interval <span class="o">&lt;-</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.character</span><span class="p">(</span>Data2<span class="o">$</span>interval<span class="p">))</span>
+<span class="kp">row.names</span><span class="p">(</span>Data2<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">()</span>
+<span class="kn">library</span><span class="p">(</span>lattice<span class="p">)</span>
+<span class="c1">#xyplot(Data2$steps ~ Data2$interval |Data2$workday, layout = c(1,1), type = "l", ylab = "Num of steps", xlab = "interval")</span>
+xyplot<span class="p">(</span>Data2<span class="o">$</span>steps <span class="o">~</span> Data2<span class="o">$</span>interval <span class="o">|</span>Data2<span class="o">$</span>workday<span class="p">,</span> layout <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> type <span class="o">=</span> <span class="s">"l"</span><span class="p">,</span> ylab <span class="o">=</span> <span class="s">"Num of steps"</span><span class="p">,</span> xlab <span class="o">=</span> <span class="s">"interval"</span><span class="p">)</span>
+
+</pre></div>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
