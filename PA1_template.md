@@ -7,8 +7,9 @@ data <- read.csv("./RepData_PeerAssessment1/activity/activity.csv", header = TRU
 index <- complete.cases(data)
 data1 <- data[index,]
 ```
+
 # What is mean total number of steps taken per day?
-# Loading and preprocessing the data
+
 ```{r}
 data2 <- data1[-which(data1$steps==0),]
 date <- unique(data$date)
