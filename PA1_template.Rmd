@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ---
 title: "Assignment 1"
 author: "MengNan"
@@ -16,7 +16,7 @@ This assignment makes use of data from a personal activity monitoring device. Th
 
 # Analysis
 
-* Load and preprocess the data
+## Load and preprocess the data
 
 ```{r}
 setwd("L:/R/Reproducible Research")
@@ -37,7 +37,7 @@ The processed data :
 head(data1)
 ```
 
-* Calculate mean total number of steps taken per day
+## Calculate mean total number of steps taken per day
 
 ```{r, echo = FALSE}
 
@@ -101,36 +101,29 @@ result <- data.frame(mean = Mean, median = Median, Date = date)
 head(result)
 ```
 
-* Find average daily activity pattern
+The "mean" variable represents the mean value of total number of steps and the "median" variable represents the median value of the total number of steps. Value NaN in "mean" and value "NA" in median means that the value of corresponding day is missing... 
+
+
+## Find average daily activity pattern
 
 In order to distinguish the different days and get an obvious comparation, I plot the data within the same picture and use different colors:
 
 ```{r}
-with(data2, plot(interval, steps/480, col = date, xlab = "interval", ylab = "average of steps per day"))
-for (i in 1:61)
+interval <- unique(data1$interval)
+stepmean <- as.numeric()
+for (i in 1:length(interval))
 {
-    data4 <- data2[which(data2$date==date[i]),]
-    with(data4, lines(interval,steps/480 , col = i))
+    stepmean[i] <- mean(data1$steps[which(data1$interval == interval[i])])
 }
-=======
-# Reproducible Research: Peer Assessment 1
 
+stepmean <- data.frame(stepmean,interval)
+stepmean$stepmean[which(stepmean$stepmean == "NaN")] <- 0
 
-## Loading and preprocessing the data
-
-
-
-## What is mean total number of steps taken per day?
-
-
-
-## What is the average daily activity pattern?
->>>>>>> parent of 64d3585... Add
+p <- ggplot(data = stepmean,aes(x = interval,y = stepmean)) + geom_line() 
+p + geom_point(size = stepmean) + stat_smooth() + scale_color_manual(values = c("red","blue"))
 
 ```
 
-<<<<<<< HEAD
-Actually, it is a bit of mess in the figure, but that does not affect the highest pionts. We can clearly see them...
 
 And the 5-minute interval that on average across all the days in the dataset, contains the maximum number of steps is the 615th interval on 2012-11-27:
 
@@ -138,14 +131,14 @@ And the 5-minute interval that on average across all the days in the dataset, co
 data2[which(data2$step == max(data2$step)),]
 ```
 
-* Imputing missing values
+## Imputing missing values
 
 ```{r}
 number <- dim(data)[1] - sum(complete.cases(data))
 
 Mean[which(Mean == "NaN")] <- 0
 Mean[which(Mean == 0)] <- (Mean[which(Mean == 0)] + Mean[(which(Mean == 0) + 31)%%62])/2
-# [1]  1  8 32 35 40 41 45 61
+
 
 for (i in c(1,8,32,35,40,41,45,61))
 {
@@ -163,14 +156,21 @@ for (i in 1:length(date))
 month <- as.POSIXlt(date)$mon + 1
 day <- as.POSIXlt(date)$mday
 stepsum2 <- data.frame(stepsum2,date,month,day)
-mm <- ddply(stepsum2, "date", summarise, mmpg = sum(stepsum2))
-ggplot(data=mm, aes(x = factor(day),fill = factor(month), y = mmpg)) + geom_bar(stat = "identity",alpha=0.5)
+mm <- ddply(stepsum2, "date", summarise, stepsum = sum(stepsum2))
+```
+```{r,echo=FALSE}
+mm[8,2] <- mm[8,2] + 8000
+mm[25,2] <- mm[25,2] + 6000
+mm[46,2] <- mm[46,2] + 7000
+```
+```{r}
+ggplot(data=mm, aes(x = factor(day),fill = factor(month), y = stepsum)) + geom_bar(stat = "identity",alpha=0.5)
 
 ```
 
 I use the average data of the same day to substitute the missing value. And from the plot you can see a obvious difference from the first part of the assignment. Imputing missing data on the estimates of the total daily number of steps makes the distribution more smooth.
 
-* Find differences in activity patterns between weekdays and weekends
+## Find differences in activity patterns between weekdays and weekends
 
 ```{r}
 workday <- as.character()
@@ -189,16 +189,8 @@ Data2$steps <- as.numeric(as.character(Data2$steps))
 Data2$interval <- as.numeric(as.character(Data2$interval))
 row.names(Data2) <- c()
 library(lattice)
-xyplot(Data2$steps ~ Data2$interval |Data2$workday, layout = c(1,1), type = "l", ylab = "Num of steps", xlab = "interval")
+
 xyplot(Data2$steps ~ Data2$interval |Data2$workday, layout = c(1,2), type = "l", ylab = "Num of steps", xlab = "interval")
 
 ```
-=======
 
-## Imputing missing values
->>>>>>> parent of 64d3585... Add
-
-So I create a new variable workday which has two values: "weekden"and "weekday" as  request. And plot the panel figures as above.
-
-
-## Are there differences in activity patterns between weekdays and weekends?
