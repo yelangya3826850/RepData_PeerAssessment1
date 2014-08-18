@@ -31,8 +31,7 @@ for (i in 1:length(date))
     Median[i] <- median(data2$steps[which(data2$date == date[i])])
 }
 
-#Mean[which(Mean == "NaN")] <- 0
-#Median[is.na(Median)] <- 0
+
 
 result <- data.frame(mean = Mean, median = Median, Date = date)
 
