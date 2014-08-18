@@ -64,11 +64,25 @@ data1 <span class="o">&lt;-</span> data<span class="p">[</span>index<span class=
 <p>The row data is like :</p>
 
 <div class="highlight highlight-r"><pre><span class="kp">head</span><span class="p">(</span>data<span class="p">)</span>
+<span class="c1">##   steps       date interval</span>
+<span class="c1">## 1    NA 2012-10-01        0</span>
+<span class="c1">## 2    NA 2012-10-01        5</span>
+<span class="c1">## 3    NA 2012-10-01       10</span>
+<span class="c1">## 4    NA 2012-10-01       15</span>
+<span class="c1">## 5    NA 2012-10-01       20</span>
+<span class="c1">## 6    NA 2012-10-01       25</span>
 </pre></div>
 
 <p>The processed data :</p>
 
 <div class="highlight highlight-r"><pre><span class="kp">head</span><span class="p">(</span>data1<span class="p">)</span>
+<span class="c1">##     steps       date interval</span>
+<span class="c1">## 289     0 2012-10-02        0</span>
+<span class="c1">## 290     0 2012-10-02        5</span>
+<span class="c1">## 291     0 2012-10-02       10</span>
+<span class="c1">## 292     0 2012-10-02       15</span>
+<span class="c1">## 293     0 2012-10-02       20</span>
+<span class="c1">## 294     0 2012-10-02       25</span>
 </pre></div>
 
 <ul>
@@ -131,6 +145,15 @@ data2 <span class="o">&lt;-</span> data1<span class="p">[</span><span class="o">
 <pre lang="r,"><code>result &lt;- data.frame(mean = Mean, median = Median, Date = date)
 head(result)
 </code></pre>
+
+<div class="highlight highlight-r"><pre><span class="c1">##      mean median       Date</span>
+<span class="c1">## 1     NaN     NA 2012-10-01</span>
+<span class="c1">## 2  0.4375   63.0 2012-10-02</span>
+<span class="c1">## 3 39.4167   61.0 2012-10-03</span>
+<span class="c1">## 4 42.0694   56.5 2012-10-04</span>
+<span class="c1">## 5 46.1597   66.0 2012-10-05</span>
+<span class="c1">## 6 53.5417   67.0 2012-10-06</span>
+</pre></div>
 
 <ul>
 <li>Find average daily activity pattern</li>
