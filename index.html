@@ -204,7 +204,7 @@ day <span class="o">&lt;-</span> <span class="kp">as.POSIXlt</span><span class="
 stepsum2 <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>stepsum2<span class="p">,</span><span class="kp">date</span><span class="p">,</span>month<span class="p">,</span>day<span class="p">)</span>
 mm <span class="o">&lt;-</span> ddply<span class="p">(</span>stepsum2<span class="p">,</span> <span class="s">"date"</span><span class="p">,</span> summarise<span class="p">,</span> stepsum <span class="o">=</span> <span class="kp">sum</span><span class="p">(</span>stepsum2<span class="p">))</span>
 
-<span class="sb">``</span>`<span class="p">{</span>r<span class="p">}</span>
+
 ggplot<span class="p">(</span>data<span class="o">=</span>mm<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>day<span class="p">),</span>fill <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>month<span class="p">),</span> y <span class="o">=</span> stepsum<span class="p">))</span> <span class="o">+</span> geom_bar<span class="p">(</span>stat <span class="o">=</span> <span class="s">"identity"</span><span class="p">,</span>alpha<span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
 
 </pre></div>
