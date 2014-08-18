@@ -107,6 +107,8 @@ stepsum <span class="o">&lt;-</span> <span class="kt">data.frame</span><span cla
 ggplot<span class="p">(</span>data<span class="o">=</span>mm<span class="p">,</span>aes<span class="p">(</span>x <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>day<span class="p">),</span>fill <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>month<span class="p">),</span> y <span class="o">=</span> stepsum<span class="p">))</span> <span class="o">+</span> geom_bar<span class="p">(</span>stat <span class="o">=</span> <span class="s">"identity"</span><span class="p">,</span>alpha<span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
 </pre></div>
 
+<p><img src="https://raw.githubusercontent.com/yelangya3826850/RepData_PeerAssessment1/master/figure/1.png" alt="Result"></p>
+
 <p>Now, the figure above is the statictis of total number of the steps every day. Color "Red" represent Month Oct.and "blue" stands for Nov. In this cumulative distribution figure, we can clearly the difference between two months and the distribution of the same month.</p>
 
 <ol>
@@ -141,6 +143,7 @@ head(result)
     <span class="kp">with</span><span class="p">(</span>data4<span class="p">,</span> lines<span class="p">(</span>interval<span class="p">,</span>steps<span class="o">/</span><span class="m">480</span> <span class="p">,</span> col <span class="o">=</span> i<span class="p">))</span>
 <span class="p">}</span>
 
+<span class="o">!</span><span class="p">[</span>Result<span class="p">](</span>https<span class="o">://</span>raw.githubusercontent.com<span class="o">/</span>yelangya3826850<span class="o">/</span>RepData_PeerAssessment1<span class="o">/</span>master<span class="o">/</span>figure<span class="o">/</span><span class="m">3.</span>png<span class="p">)</span> 
 
 </pre></div>
 
@@ -157,7 +160,7 @@ head(result)
 
 Mean<span class="p">[</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="s">"NaN"</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="m">0</span>
 Mean<span class="p">[</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="m">0</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="p">(</span>Mean<span class="p">[</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="m">0</span><span class="p">)]</span> <span class="o">+</span> Mean<span class="p">[(</span><span class="kp">which</span><span class="p">(</span>Mean <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="o">+</span> <span class="m">31</span><span class="p">)</span><span class="o">%%</span><span class="m">62</span><span class="p">])</span><span class="o">/</span><span class="m">2</span>
-<span class="c1"># [1]  1  8 32 35 40 41 45 61</span>
+
 
 <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">32</span><span class="p">,</span><span class="m">35</span><span class="p">,</span><span class="m">40</span><span class="p">,</span><span class="m">41</span><span class="p">,</span><span class="m">45</span><span class="p">,</span><span class="m">61</span><span class="p">))</span>
 <span class="p">{</span>
@@ -176,15 +179,13 @@ month <span class="o">&lt;-</span> <span class="kp">as.POSIXlt</span><span class
 day <span class="o">&lt;-</span> <span class="kp">as.POSIXlt</span><span class="p">(</span><span class="kp">date</span><span class="p">)</span><span class="o">$</span>mday
 stepsum2 <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>stepsum2<span class="p">,</span><span class="kp">date</span><span class="p">,</span>month<span class="p">,</span>day<span class="p">)</span>
 mm <span class="o">&lt;-</span> ddply<span class="p">(</span>stepsum2<span class="p">,</span> <span class="s">"date"</span><span class="p">,</span> summarise<span class="p">,</span> stepsum <span class="o">=</span> <span class="kp">sum</span><span class="p">(</span>stepsum2<span class="p">))</span>
+
 <span class="sb">``</span>`<span class="p">{</span>r<span class="p">}</span>
-mm<span class="p">[</span><span class="m">8</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> mm<span class="p">[</span><span class="m">8</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="m">8000</span>
-mm<span class="p">[</span><span class="m">25</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> mm<span class="p">[</span><span class="m">25</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="m">6000</span>
-mm<span class="p">[</span><span class="m">46</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> mm<span class="p">[</span><span class="m">46</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="m">7000</span>
-</pre></div>
-
-<div class="highlight highlight-r"><pre>ggplot<span class="p">(</span>data<span class="o">=</span>mm<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>day<span class="p">),</span>fill <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>month<span class="p">),</span> y <span class="o">=</span> stepsum<span class="p">))</span> <span class="o">+</span> geom_bar<span class="p">(</span>stat <span class="o">=</span> <span class="s">"identity"</span><span class="p">,</span>alpha<span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
+ggplot<span class="p">(</span>data<span class="o">=</span>mm<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>day<span class="p">),</span>fill <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>month<span class="p">),</span> y <span class="o">=</span> stepsum<span class="p">))</span> <span class="o">+</span> geom_bar<span class="p">(</span>stat <span class="o">=</span> <span class="s">"identity"</span><span class="p">,</span>alpha<span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
 
 </pre></div>
+
+<p><img src="https://raw.githubusercontent.com/yelangya3826850/RepData_PeerAssessment1/master/figure/2.png" alt="Result"></p>
 
 <p>I use the average data of the same day to substitute the missing value. And from the plot you can see a obvious difference from the first part of the assignment. Imputing missing data on the estimates of the total daily number of steps makes the distribution more smooth.</p>
 
@@ -210,6 +211,8 @@ Data2<span class="o">$</span>interval <span class="o">&lt;-</span> <span class="
 xyplot<span class="p">(</span>Data2<span class="o">$</span>steps <span class="o">~</span> Data2<span class="o">$</span>interval <span class="o">|</span>Data2<span class="o">$</span>workday<span class="p">,</span> layout <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> type <span class="o">=</span> <span class="s">"l"</span><span class="p">,</span> ylab <span class="o">=</span> <span class="s">"Num of steps"</span><span class="p">,</span> xlab <span class="o">=</span> <span class="s">"interval"</span><span class="p">)</span>
 
 </pre></div>
+
+<p><img src="https://raw.githubusercontent.com/yelangya3826850/RepData_PeerAssessment1/master/figure/4.png" alt="Result"></p>
       </section>
 
     </div>
